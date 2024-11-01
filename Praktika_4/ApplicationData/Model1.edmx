@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище GostinizaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChetNaOplaty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="articul" Type="int" Nullable="false" />
+          <Property Name="tovar" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kolichestvo" Type="int" Nullable="false" />
+          <Property Name="chena" Type="money" Nullable="false" />
+          <Property Name="stavka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="symmaNDS" Type="money" Nullable="false" />
+          <Property Name="symma" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GraficYborkiNomerov">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="etag" Type="int" Nullable="false" />
+          <Property Name="gornichaia" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nomer_fond">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aetag" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="nomer" Type="int" Nullable="false" />
+          <Property Name="kategoria" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OthetPoOplate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="int" Nullable="false" />
+          <Property Name="otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kategoria" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="datavezda" Type="date" Nullable="false" />
+          <Property Name="dataviezda" Type="date" Nullable="false" />
+          <Property Name="summa" Type="money" Nullable="false" />
+          <Property Name="oplacheno" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OthetPoSostoianiuNomernogoFonda">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomer" Type="int" Nullable="false" />
+          <Property Name="kategoria" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="statys" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dataviezda" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostoialciGivushieSeichasVGostinice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="etag" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="nomer" Type="int" Nullable="false" />
+          <Property Name="kategoria" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="vezd" Type="date" Nullable="false" />
+          <Property Name="viezd" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_ChetNaOplaty_OthetPoOplate">
+          <End Role="OthetPoOplate" Type="Self.OthetPoOplate" Multiplicity="1" />
+          <End Role="ChetNaOplaty" Type="Self.ChetNaOplaty" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OthetPoOplate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ChetNaOplaty">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice">
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="1" />
+          <End Role="OthetPoOplate" Type="Self.OthetPoOplate" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OthetPoOplate">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OthetPoSostoianiuNomernogoFonda_nomer_fond">
+          <End Role="nomer_fond" Type="Self.nomer_fond" Multiplicity="1" />
+          <End Role="OthetPoSostoianiuNomernogoFonda" Type="Self.OthetPoSostoianiuNomernogoFonda" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="nomer_fond">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OthetPoSostoianiuNomernogoFonda">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty">
+          <End Role="ChetNaOplaty" Type="Self.ChetNaOplaty" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ChetNaOplaty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov">
+          <End Role="GraficYborkiNomerov" Type="Self.GraficYborkiNomerov" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="GraficYborkiNomerov">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_nomer_fond">
+          <End Role="nomer_fond" Type="Self.nomer_fond" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="nomer_fond">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda">
+          <End Role="OthetPoSostoianiuNomernogoFonda" Type="Self.OthetPoSostoianiuNomernogoFonda" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OthetPoSostoianiuNomernogoFonda">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище GostinizaModelContainer">
+          <EntitySet Name="ChetNaOplaty" EntityType="Self.ChetNaOplaty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GraficYborkiNomerov" EntityType="Self.GraficYborkiNomerov" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nomer_fond" EntityType="Self.nomer_fond" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OthetPoOplate" EntityType="Self.OthetPoOplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OthetPoSostoianiuNomernogoFonda" EntityType="Self.OthetPoSostoianiuNomernogoFonda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostoialciGivushieSeichasVGostinice" EntityType="Self.PostoialciGivushieSeichasVGostinice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ChetNaOplaty_OthetPoOplate" Association="Self.FK_ChetNaOplaty_OthetPoOplate">
+            <End Role="OthetPoOplate" EntitySet="OthetPoOplate" />
+            <End Role="ChetNaOplaty" EntitySet="ChetNaOplaty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice" Association="Self.FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice">
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+            <End Role="OthetPoOplate" EntitySet="OthetPoOplate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OthetPoSostoianiuNomernogoFonda_nomer_fond" Association="Self.FK_OthetPoSostoianiuNomernogoFonda_nomer_fond">
+            <End Role="nomer_fond" EntitySet="nomer_fond" />
+            <End Role="OthetPoSostoianiuNomernogoFonda" EntitySet="OthetPoSostoianiuNomernogoFonda" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty" Association="Self.FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty">
+            <End Role="ChetNaOplaty" EntitySet="ChetNaOplaty" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov" Association="Self.FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov">
+            <End Role="GraficYborkiNomerov" EntitySet="GraficYborkiNomerov" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_nomer_fond" Association="Self.FK_PostoialciGivushieSeichasVGostinice_nomer_fond">
+            <End Role="nomer_fond" EntitySet="nomer_fond" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda" Association="Self.FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda">
+            <End Role="OthetPoSostoianiuNomernogoFonda" EntitySet="OthetPoSostoianiuNomernogoFonda" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GostinizaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChetNaOplaty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="articul" Type="Int32" Nullable="false" />
+          <Property Name="tovar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kolichestvo" Type="Int32" Nullable="false" />
+          <Property Name="chena" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="stavka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="symmaNDS" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="symma" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="OthetPoOplate" Relationship="Self.FK_ChetNaOplaty_OthetPoOplate" FromRole="ChetNaOplaty" ToRole="OthetPoOplate" />
+          <NavigationProperty Name="PostoialciGivushieSeichasVGostinice" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty" FromRole="ChetNaOplaty" ToRole="PostoialciGivushieSeichasVGostinice" />
+        </EntityType>
+        <EntityType Name="GraficYborkiNomerov">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="etag" Type="Int32" Nullable="false" />
+          <Property Name="gornichaia" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PostoialciGivushieSeichasVGostinice" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov" FromRole="GraficYborkiNomerov" ToRole="PostoialciGivushieSeichasVGostinice" />
+        </EntityType>
+        <EntityType Name="nomer_fond">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aetag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nomer" Type="Int32" Nullable="false" />
+          <Property Name="kategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OthetPoSostoianiuNomernogoFonda" Relationship="Self.FK_OthetPoSostoianiuNomernogoFonda_nomer_fond" FromRole="nomer_fond" ToRole="OthetPoSostoianiuNomernogoFonda" />
+          <NavigationProperty Name="PostoialciGivushieSeichasVGostinice" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_nomer_fond" FromRole="nomer_fond" ToRole="PostoialciGivushieSeichasVGostinice" />
+        </EntityType>
+        <EntityType Name="OthetPoOplate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="Int32" Nullable="false" />
+          <Property Name="otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="datavezda" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dataviezda" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="summa" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="oplacheno" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="ChetNaOplaty" Relationship="Self.FK_ChetNaOplaty_OthetPoOplate" FromRole="OthetPoOplate" ToRole="ChetNaOplaty" />
+          <NavigationProperty Name="PostoialciGivushieSeichasVGostinice" Relationship="Self.FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice" FromRole="OthetPoOplate" ToRole="PostoialciGivushieSeichasVGostinice" />
+        </EntityType>
+        <EntityType Name="OthetPoSostoianiuNomernogoFonda">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomer" Type="Int32" Nullable="false" />
+          <Property Name="kategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="statys" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dataviezda" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="nomer_fond" Relationship="Self.FK_OthetPoSostoianiuNomernogoFonda_nomer_fond" FromRole="OthetPoSostoianiuNomernogoFonda" ToRole="nomer_fond" />
+          <NavigationProperty Name="PostoialciGivushieSeichasVGostinice" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda" FromRole="OthetPoSostoianiuNomernogoFonda" ToRole="PostoialciGivushieSeichasVGostinice" />
+        </EntityType>
+        <EntityType Name="PostoialciGivushieSeichasVGostinice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="etag" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="nomer" Type="Int32" Nullable="false" />
+          <Property Name="kategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vezd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="viezd" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="ChetNaOplaty" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty" FromRole="PostoialciGivushieSeichasVGostinice" ToRole="ChetNaOplaty" />
+          <NavigationProperty Name="GraficYborkiNomerov" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov" FromRole="PostoialciGivushieSeichasVGostinice" ToRole="GraficYborkiNomerov" />
+          <NavigationProperty Name="nomer_fond" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_nomer_fond" FromRole="PostoialciGivushieSeichasVGostinice" ToRole="nomer_fond" />
+          <NavigationProperty Name="OthetPoOplate" Relationship="Self.FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice" FromRole="PostoialciGivushieSeichasVGostinice" ToRole="OthetPoOplate" />
+          <NavigationProperty Name="OthetPoSostoianiuNomernogoFonda" Relationship="Self.FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda" FromRole="PostoialciGivushieSeichasVGostinice" ToRole="OthetPoSostoianiuNomernogoFonda" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_ChetNaOplaty_OthetPoOplate">
+          <End Role="OthetPoOplate" Type="Self.OthetPoOplate" Multiplicity="1" />
+          <End Role="ChetNaOplaty" Type="Self.ChetNaOplaty" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OthetPoOplate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ChetNaOplaty">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty">
+          <End Role="ChetNaOplaty" Type="Self.ChetNaOplaty" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ChetNaOplaty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov">
+          <End Role="GraficYborkiNomerov" Type="Self.GraficYborkiNomerov" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="GraficYborkiNomerov">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OthetPoSostoianiuNomernogoFonda_nomer_fond">
+          <End Role="nomer_fond" Type="Self.nomer_fond" Multiplicity="1" />
+          <End Role="OthetPoSostoianiuNomernogoFonda" Type="Self.OthetPoSostoianiuNomernogoFonda" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="nomer_fond">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OthetPoSostoianiuNomernogoFonda">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_nomer_fond">
+          <End Role="nomer_fond" Type="Self.nomer_fond" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="nomer_fond">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice">
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="1" />
+          <End Role="OthetPoOplate" Type="Self.OthetPoOplate" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OthetPoOplate">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda">
+          <End Role="OthetPoSostoianiuNomernogoFonda" Type="Self.OthetPoSostoianiuNomernogoFonda" Multiplicity="1" />
+          <End Role="PostoialciGivushieSeichasVGostinice" Type="Self.PostoialciGivushieSeichasVGostinice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OthetPoSostoianiuNomernogoFonda">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostoialciGivushieSeichasVGostinice">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GostinizaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChetNaOplaty" EntityType="Self.ChetNaOplaty" />
+          <EntitySet Name="GraficYborkiNomerov" EntityType="Self.GraficYborkiNomerov" />
+          <EntitySet Name="nomer_fond" EntityType="Self.nomer_fond" />
+          <EntitySet Name="OthetPoOplate" EntityType="Self.OthetPoOplate" />
+          <EntitySet Name="OthetPoSostoianiuNomernogoFonda" EntityType="Self.OthetPoSostoianiuNomernogoFonda" />
+          <EntitySet Name="PostoialciGivushieSeichasVGostinice" EntityType="Self.PostoialciGivushieSeichasVGostinice" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_ChetNaOplaty_OthetPoOplate" Association="Self.FK_ChetNaOplaty_OthetPoOplate">
+            <End Role="OthetPoOplate" EntitySet="OthetPoOplate" />
+            <End Role="ChetNaOplaty" EntitySet="ChetNaOplaty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty" Association="Self.FK_PostoialciGivushieSeichasVGostinice_ChetNaOplaty">
+            <End Role="ChetNaOplaty" EntitySet="ChetNaOplaty" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov" Association="Self.FK_PostoialciGivushieSeichasVGostinice_GraficYborkiNomerov">
+            <End Role="GraficYborkiNomerov" EntitySet="GraficYborkiNomerov" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OthetPoSostoianiuNomernogoFonda_nomer_fond" Association="Self.FK_OthetPoSostoianiuNomernogoFonda_nomer_fond">
+            <End Role="nomer_fond" EntitySet="nomer_fond" />
+            <End Role="OthetPoSostoianiuNomernogoFonda" EntitySet="OthetPoSostoianiuNomernogoFonda" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_nomer_fond" Association="Self.FK_PostoialciGivushieSeichasVGostinice_nomer_fond">
+            <End Role="nomer_fond" EntitySet="nomer_fond" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice" Association="Self.FK_OthetPoOplate_PostoialciGivushieSeichasVGostinice">
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+            <End Role="OthetPoOplate" EntitySet="OthetPoOplate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda" Association="Self.FK_PostoialciGivushieSeichasVGostinice_OthetPoSostoianiuNomernogoFonda">
+            <End Role="OthetPoSostoianiuNomernogoFonda" EntitySet="OthetPoSostoianiuNomernogoFonda" />
+            <End Role="PostoialciGivushieSeichasVGostinice" EntitySet="PostoialciGivushieSeichasVGostinice" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище GostinizaModelContainer" CdmEntityContainer="GostinizaEntities">
+          <EntitySetMapping Name="ChetNaOplaty">
+            <EntityTypeMapping TypeName="GostinizaModel.ChetNaOplaty">
+              <MappingFragment StoreEntitySet="ChetNaOplaty">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="articul" ColumnName="articul" />
+                <ScalarProperty Name="tovar" ColumnName="tovar" />
+                <ScalarProperty Name="kolichestvo" ColumnName="kolichestvo" />
+                <ScalarProperty Name="chena" ColumnName="chena" />
+                <ScalarProperty Name="stavka" ColumnName="stavka" />
+                <ScalarProperty Name="symmaNDS" ColumnName="symmaNDS" />
+                <ScalarProperty Name="symma" ColumnName="symma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GraficYborkiNomerov">
+            <EntityTypeMapping TypeName="GostinizaModel.GraficYborkiNomerov">
+              <MappingFragment StoreEntitySet="GraficYborkiNomerov">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="etag" ColumnName="etag" />
+                <ScalarProperty Name="gornichaia" ColumnName="gornichaia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nomer_fond">
+            <EntityTypeMapping TypeName="GostinizaModel.nomer_fond">
+              <MappingFragment StoreEntitySet="nomer_fond">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="aetag" ColumnName="aetag" />
+                <ScalarProperty Name="nomer" ColumnName="nomer" />
+                <ScalarProperty Name="kategoria" ColumnName="kategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OthetPoOplate">
+            <EntityTypeMapping TypeName="GostinizaModel.OthetPoOplate">
+              <MappingFragment StoreEntitySet="OthetPoOplate">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="familia" ColumnName="familia" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="otchestvo" ColumnName="otchestvo" />
+                <ScalarProperty Name="kategoria" ColumnName="kategoria" />
+                <ScalarProperty Name="datavezda" ColumnName="datavezda" />
+                <ScalarProperty Name="dataviezda" ColumnName="dataviezda" />
+                <ScalarProperty Name="summa" ColumnName="summa" />
+                <ScalarProperty Name="oplacheno" ColumnName="oplacheno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OthetPoSostoianiuNomernogoFonda">
+            <EntityTypeMapping TypeName="GostinizaModel.OthetPoSostoianiuNomernogoFonda">
+              <MappingFragment StoreEntitySet="OthetPoSostoianiuNomernogoFonda">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nomer" ColumnName="nomer" />
+                <ScalarProperty Name="kategoria" ColumnName="kategoria" />
+                <ScalarProperty Name="statys" ColumnName="statys" />
+                <ScalarProperty Name="dataviezda" ColumnName="dataviezda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostoialciGivushieSeichasVGostinice">
+            <EntityTypeMapping TypeName="GostinizaModel.PostoialciGivushieSeichasVGostinice">
+              <MappingFragment StoreEntitySet="PostoialciGivushieSeichasVGostinice">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="etag" ColumnName="etag" />
+                <ScalarProperty Name="nomer" ColumnName="nomer" />
+                <ScalarProperty Name="kategoria" ColumnName="kategoria" />
+                <ScalarProperty Name="familia" ColumnName="familia" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="otchestvo" ColumnName="otchestvo" />
+                <ScalarProperty Name="vezd" ColumnName="vezd" />
+                <ScalarProperty Name="viezd" ColumnName="viezd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="GostinizaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

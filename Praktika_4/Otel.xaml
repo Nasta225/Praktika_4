@@ -1,0 +1,31 @@
+﻿<Window x:Class="Praktika_4.Otel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Praktika_4"
+        mc:Ignorable="d"
+        Title="Otel" Height="600" Width="800">
+    <Grid Background="LightCyan">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="219*"/>
+            <RowDefinition Height="27*"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="1" VerticalAlignment="Center"
+            x:Name="FrameMain" Height="400"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button x:Name="Nomera" Style="{StaticResource ButtonNomer}" Content="Номерной фонд" Click="Nomera_Click"/>
+            <Button Style="{StaticResource ButtonNomer}" Content="Регистрарция гостей" Click="Button_Click"/>
+            <Button Style="{StaticResource ButtonNomer}" Content="Расписание уборки номеров" x:Name="Raspisanie" Click="Raspisanie_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center"  Width="400">
+            <Button Content="Удалить" x:Name="BtnDel" Style="{StaticResource ButtonR}" Click="BtnDel_Click"/>
+            <Button Content="Добавить нового гостя" x:Name="BtnAdd" Style="{StaticResource ButtonG}" Click="BtnAdd_Click"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
